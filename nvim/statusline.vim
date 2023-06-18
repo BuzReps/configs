@@ -1,0 +1,84 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                        STATUSLINE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Also see fillchars+=stl: in init.vim
+
+if exists("g:buz_statusline")
+  finish
+endif
+let g:buz_statusline = 1
+
+exec "source " .. g:config_root .. "/common.vim"
+
+
+function! s:GetStatusLine1Impl(isFocused)
+  let winInfo = getwininfo(g:statusline_winid)[0]
+  let bufInfo = getbufinfo(winInfo.bufnr)[0]
+  let winNr = win_id2win(g:statusline_winid)
+  "let bufNr = string(winInfo.bufnr)
+  let totalWidth = winwidth(g:statusline_winid)
+  if (&g:laststatus == 3)
+    let totalWidth = &g:columns
+  endif
+
+  let fileModifiedSign = ""
+  if bufInfo.changed
+    let fileModifiedSign = "[+]"
+  endif
+
+  let fullPath = bufInfo.name
+  let relPath = fnamemodify(bufInfo.name, ":.")
+  let pathTail = fnamemodify(bufInfo.name, ":t")
+
+  let leftPart = ""
+  let centerPart = ""
+  let rightPart = ""
+
+  if a:isFocused
+    let centerPart = " Current dir:" .. getcwd() .. " "
+    if (exists("b:lsp_clients"))
+      let leftPart ..= "LSP:" .. b:lsp_clients .. " "
+    endif
+    let rightPart = '┤ Character:%-3c Line:%l/%L'
+  else
+    let centerPart = string(winNr) .. " " .. relPath
+  endif
+
+  let leftPart ..= "├"
+
+  let centerPartPos = (totalWidth - strlen(centerPart)) / 2
+  let leftFillLength = centerPartPos - strlen(leftPart)
+  let leftPart .= FillString('—', leftFillLength)
+  return leftPart . centerPart . '%=' . rightPart
+endfunction
+
+"Intended to be used with `set laststatus=3`
+"├———————————————— Current dir: /home/vladislav/repos/configs/vim/nvim ————————————————┤ Character:22  Line:13/37
+function! GetStatusLine1()
+  let isFocused = g:statusline_winid == win_getid(winnr())
+  let statusline = s:GetStatusLine1Impl(isFocused)
+  if isFocused
+    let statusline = "%#StatusLine#" .. statusline
+  else
+    let statusline = "%#StatusLineNC#" .. statusline
+  endif
+  return statusline
+endfunction
+
+"Intended to be used with `set laststatus=3`
+"├—-— 1:vim/nvim/init.vim ——— 2:vim/nvim/lua/init.lua ——— [3:/tmp/asdfb/script.lua] ———┤ Character:22  Line:13/37
+function! GetStatusLine2()
+  return GetStatusLine1()
+endfunction
+
+"Intended to be used with `set laststatus=3`
+"├————————————————— /home/vladislav/repos/configs/vim/nvim + init.vim —————————————————┤ Character:22  Line:13/37
+function! GetStatusLine3()
+  "TODO IMPLEMENT
+  return GetStatusLine1()
+endfunction
+
+"Comparison:
+"├———————————————— Current dir: /home/vladislav/repos/configs/vim/nvim ————————————————┤ Character:22  Line:13/37
+"├—-— 1:vim/nvim/init.vim ——— 2:vim/nvim/lua/init.lua ——— [3:/tmp/asdfb/script.lua] ———┤ Character:22  Line:13/37
+"├————————————————— /home/vladislav/repos/configs/vim/nvim + init.vim —————————————————┤ Character:22  Line:13/37

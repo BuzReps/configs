@@ -1,0 +1,23 @@
+[gui]
+	encoding = utf-8
+	tabsize = 4
+
+[diff]
+	tool = nvimdiff
+
+[difftool]
+	prompt = true
+
+[core]
+	editor = nvim
+	quotepath = off
+
+[color "diff"]
+	meta = "#000000 yellow"
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[init]
+	defaultBranch = master
+

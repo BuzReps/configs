@@ -1,15 +1,31 @@
+# .gitconfig
+
+[Git (1.7.10+)](https://git-scm.com/docs/git-config#_includes) supports including files.  
+Local ```.gitconfig``` example:
+```
+[user]
+	name = <Your name>
+	email = <Your email>
+
+[include]
+	path = <This repo>/git/.gitconfig
+```
+
 # git-gui
 
+## Dark theme:
 Windows path: ```C:\Program Files\Git\mingw64\share\git-gui\lib\themed.tcl```  
 Open with text editor, find function below and change variable values
 ```
 proc sync_with_theme {} {
-		...
-		set text_bg   gray10
-		set text_fg   gray80
-		...
-		set select_fg darkblue
-		...
+	set base_bg             #282a36
+	set base_fg             #f8f8f2
+	set text_bg             #282a36
+	set text_fg             #f8f8f2
+	set select_bg           #f8f8f2
+	set select_fg           #282a36
+	set inactive_select_bg	[convert_rgb_to_gray $select_bg]
+	set inactive_select_fg	$select_fg
 ```
 
 ## Fonts
@@ -18,9 +34,8 @@ proc sync_with_theme {} {
 |Main font|Segoe UI|Regular|12|
 |Diff/Console Font|Hack|Regular|12|
 
-
 # gitk
-> TODO: find config file
+> TODO: config file
 
 ## Colors
 ||RGB|
