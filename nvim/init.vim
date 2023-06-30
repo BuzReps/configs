@@ -203,6 +203,7 @@ nnoremap <A-k> <cmd>call MoveCurrentTab(1)<CR>
 nnoremap <A-h> gT
 nnoremap <A-l> gt
 "[R]ename current tab
+"TODO: insert current tab label after command
 nnoremap <A-r> :SetCurrentTabPageLabel 
 
 "Goto window
