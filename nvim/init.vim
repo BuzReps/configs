@@ -103,7 +103,7 @@ let g:vim_markdown_new_list_item_indent = 0
 set nocompatible
 set encoding=utf-8
 scriptencoding utf-8
-set fileencodings=ucs-bom,utf8
+set fileencodings=ucs-bom,utf-8
 
 "ignore case in search and scripts
 set ignorecase
@@ -114,8 +114,8 @@ set selection=old
 "Leave a few context lines at screen top and bottom
 set scrolloff=0
 
-"Syntax folding is can slow because it uses regexes
-set foldmethod=indent
+"Syntax folding can reduce performance because it uses regexes
+set foldmethod=syntax
 "Disable autofolding
 set nofoldenable
 "Do not unfold at text search
@@ -127,13 +127,33 @@ set nowrap
 ":vsp/vsplit <filename> will open file to the right
 set splitright
 
-"Default indent
+"Default indentation
 set expandtab
 set tabstop=2
 set shiftwidth=2
 
+"Show invisible characters
+"Useful characters: '»', '·', ඞ
+set listchars=lead:·,trail:·,tab:\|\ 
+set list
+
+"Enable syntax highlighting
+syntax on
+
+"Show titlestring variable as GUI window title
+set title
+
+"relative numbers + current line number
+set number relativenumber
 "Always show sign column. Prevents from flickering
 set signcolumn=yes
+"Colors specified columns
+set colorcolumn=80,120
+
+set fillchars=horiz:—,horizup:┴,horizdown:┬,vert:│,vertleft:┤,vertright:├,verthoriz:┼
+set fillchars+=eob:\ 
+set fillchars+=fold:\ 
+set fillchars+=stl:—
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        COMMAND MAPPING
@@ -349,29 +369,6 @@ nnoremap <Leader>us :UseSpaces
 noremap <C-0> :execute "call g:GUISetFontSize(g:defaultFontSize)"<CR>
 noremap <C-=> :execute "call GUIAdjustFontSize(1)"<CR>
 noremap <C--> :execute "call GUIAdjustFontSize(-1)"<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                        UI AND SYNTAX HIGHLIGHTING
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-syntax on
-
-"Show titlestring variable as GUI window title
-set title
-
-"relative numbers + current line number
-set number relativenumber
-
-"Colors specified columns
-set colorcolumn=80,120
-
-"Show invisible characters
-"Useful characters: '»', '·', ඞ
-set listchars=lead:·,trail:·,tab:\|\ 
-set fillchars=horiz:—,horizup:┴,horizdown:┬,vert:│,vertleft:┤,vertright:├,verthoriz:┼
-set fillchars+=eob:\ 
-set fillchars+=fold:\ 
-set fillchars+=stl:—
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        TABLINE WINBAR STATUSLINE

@@ -83,11 +83,12 @@ function! s:GetHiddenListedBuffers()
   call map(range(1, tabpagenr('$')), 'extend(active_buffers, tabpagebuflist(v:val))')
   let hidden_buffers=[]
   "Alternative implementation: bufexists(v:val)
-  echo "Delted buffers:"
+  let user_msg = 'Delted buffers:'
   for buffer in filter(range(1, bufnr('$')), 'buflisted(v:val) && index(active_buffers, v:val)==-1')
-    echo buffer
+    let user_msg = user_msg . ' ' . string(buffer)
     call add(hidden_buffers, buffer)
   endfor
+  echo user_msg
   return hidden_buffers
 endfunction
 
