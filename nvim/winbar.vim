@@ -9,21 +9,38 @@ let g:buz_winbar = 1
 
 exec "source " .. g:config_root .. "/common.vim"
 
-"Example:
-"Buf:21                    init.vim Win:2
-"Example for active buffer:
-"Buf:21                  [init.vim] Win:2
+" @brief Get window bar template
+" @example Inactive window bar: Win:1 [Marked for diff]            [Readonly] init.vim Buf:21
+" @example Active window bar:   Win:2                           [Modified] [other.vim] Buf:23
+" @return Template string
 function! GetWinBar1()
   let winInfo = getwininfo(g:statusline_winid)[0]
   "let bufInfo = getbufinfo(winInfo.bufnr)[0]
-  let winNum = string(win_id2win(g:statusline_winid))
-  if winInfo.bufnr == bufnr()
-    let file_name = "[%f]"
-  else
-    let file_name = "%f"
-  endif
-  "%= align right; %m modifiable flag; %f file relpath
+  let local_win_num = win_id2win(g:statusline_winid)
+  let is_window_current = winInfo.bufnr == bufnr()
 
-  return "Buf:" .. string(winInfo.bufnr) .. "%=%m " .. file_name .. " Win:" .. winNum
+  let win_num_tag = string(local_win_num)
+  let buf_num = "Buf:%n"
+
+  let file_name = "%f"
+  if is_window_current
+    let file_name = "[%f]"
+  endif
+
+  let diff_tag = ""
+  if getwinvar(g:statusline_winid, "&diff")
+    let diff_tag = "[Marked for diff]"
+  endif
+
+  let modification_tag = ""
+  if !getwinvar(g:statusline_winid, "&modifiable")
+    let modification_tag = "[Readonly]"
+  elseif getwinvar(g:statusline_winid, "&modified")
+    let modification_tag = "[Modified]"
+  endif
+
+  let align_right = "%="
+
+  return join([win_num_tag, diff_tag, align_right, modification_tag, file_name, buf_num], " ")
 endfunction
 
