@@ -278,18 +278,15 @@ vnoremap <Leader>s "sy :let @/=@s<CR>
 "Turn off search highlight
 noremap <Leader>S :nohl<CR>
 
-"[C]lipboard: copy unnamed register contents to OS clipboard
-nnoremap <Leader>c :let @+=@"<CR>
-"[C]lipboard: copy selected to OS clipboard
-vnoremap <Leader>c "+y
+"Clipboard [y]ank: copy unnamed register contents to OS clipboard
+nnoremap <Leader>y :let @+=@"<CR>
+"Clipboard [y]ank: copy selection to OS clipboard
+vnoremap <Leader>y "+y
 
-"'[P]aste: paste last yanked text
+"[P]aste: paste last yanked text
 "or `xnoremap <Leader>p pgvy` - paste(p), select pasted(gv), yank(y)
 noremap <Leader>p "0p
 noremap <Leader>P "0P
-
-noremap <Leader>o o<Esc>
-noremap <Leader>O O<Esc>
 
 "centering window at search result
 nnoremap n nzz
