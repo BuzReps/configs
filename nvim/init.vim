@@ -143,10 +143,29 @@ syntax on
 "Show titlestring variable as GUI window title
 set title
 
-"relative numbers + current line number
-set number relativenumber
-"Always show sign column. Prevents from flickering
-set signcolumn=yes
+function! SetCompactMode(set_compact)
+  if a:set_compact
+    set nonumber norelativenumber
+    set signcolumn=no
+  else
+    "relative numbers + current line number on current line
+    set number relativenumber
+    "Show sign column by default
+    "Set to 'yes' or to 'number' if there are plugins that flick sign column a lot
+    set signcolumn=yes
+  endif
+endfunction
+
+function! ToggleCompactMode()
+  let set_compact = 0
+  if &signcolumn == "yes" || &number || &relativenumber
+    let set_compact = 1
+  endif
+  call SetCompactMode(set_compact)
+endfunction
+
+call SetCompactMode(1)
+
 "Colors specified columns
 set colorcolumn=80,120
 
@@ -249,14 +268,14 @@ else
   execute 'diffoff'
 endif
 endfunction
+"Mark window for [D]iff: mark 2+ windows to view diff
 nnoremap <Leader>d <cmd>call ToggleDiffForCurrWindow()<CR>
 
 "[S]earch: yank current selection into search buffer
 "warning: Overwrites 's' register
 "requires appropriate selection mode
 vnoremap <Leader>s "sy :let @/=@s<CR>
-
-"Turn off last search highlight
+"Turn off search highlight
 noremap <Leader>S :nohl<CR>
 
 "[C]lipboard: copy unnamed register contents to OS clipboard
@@ -364,6 +383,8 @@ augroup END
 nnoremap <Leader>ut :UseTabs 
 "Paste spaces in <Tab>; Set amount of spaces per <Tab>
 nnoremap <Leader>us :UseSpaces 
+
+nnoremap <Leader>cm :execute ":call ToggleCompactMode()"<CR>
 
 "Font size changing. See ginit.vim
 noremap <C-0> :execute "call g:GUISetFontSize(g:defaultFontSize)"<CR>
