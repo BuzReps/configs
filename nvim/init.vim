@@ -37,6 +37,8 @@ call plug#begin("~/.vim/plugged")
 
   "LSP config. Also need to install external LSP servers
   Plug 'neovim/nvim-lspconfig'
+  "Document symbols outline (requires LSP)
+  Plug 'simrat39/symbols-outline.nvim'
 
   "Autocomplete engine
   Plug 'hrsh7th/nvim-cmp'
@@ -296,30 +298,38 @@ nnoremap N Nzz
 nnoremap u uzz
 nnoremap <C-r> <C-r>zz
 
-"'f' - 'find'
 "fg - grep in lua/init.lua
 nnoremap <Leader>ff <cmd>Telescope find_files<cr>
-nnoremap <Leader>fo <cmd>Telescope oldfiles<cr>
-nnoremap <leader>f/ <cmd>Telescope search_history<cr>
-nnoremap <leader>fht <cmd>Telescope help_tags<cr>
-nnoremap <leader>fmp <cmd>Telescope man_pages<cr>
-"[d]iagnostics [a]ll
-nnoremap <leader>fda <cmd>Telescope diagnostics<cr>
-"[d]iagnostics [c]urrent
-nnoremap <leader>fdc <cmd>Telescope diagnostics bufnr=0<cr>
+nnoremap <Leader>fof <cmd>Telescope oldfiles<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
+
 nnoremap <leader>fref <cmd>Telescope lsp_references<cr>
 nnoremap <leader>fic <cmd>Telescope lsp_incoming_calls<cr>
 nnoremap <leader>foc <cmd>Telescope lsp_outgoing_calls<cr>
-nnoremap <leader>freg <cmd>Telescope registers<cr>
-"[r]esume [p]icker
-nnoremap <leader>frp <cmd>Telescope resume<cr>
-"[l]ast [p]ickers
-nnoremap <leader>flp <cmd>Telescope pickers<cr>
 nnoremap <leader>fws <cmd>Telescope lsp_workspace_symbols<cr>
 nnoremap <leader>fds <cmd>Telescope lsp_document_symbols<cr>
-"'n' - netrw
+
+"[f]ind [a]ll [d]iagnostics
+nnoremap <leader>fad <cmd>Telescope diagnostics<cr>
+"[f]ind [c]urrent [d]iagnostics
+nnoremap <leader>fcd <cmd>Telescope diagnostics bufnr=0<cr>
+
+nnoremap <leader>fhel <cmd>Telescope help_tags<cr>
+nnoremap <leader>fman <cmd>Telescope man_pages<cr>
+nnoremap <leader>fcom <cmd>Telescope commands<cr>
+
+nnoremap <leader>f/ <cmd>Telescope search_history<cr>
+nnoremap <leader>frp <cmd>Telescope resume<cr>
+"nnoremap <leader>flp <cmd>Telescope pickers<cr>
+"[f]ind [t]elescope [d]efaults
+"nnoremap <leader>ftd <cmd>Telescope builtin<cr>
+"nnoremap <leader>freg <cmd>Telescope registers<cr>
+
+"[n]etrw - default file browser
 nnoremap <leader>n  <cmd>Lex<cr>
+
+"[s]ymbols [o]utline
+nnoremap <Leader>so  <cmd>SymbolsOutline<cr>
 
 "Window resizing
 nnoremap <F10> :resize +2<CR>
@@ -381,6 +391,7 @@ nnoremap <Leader>ut :UseTabs
 "Paste spaces in <Tab>; Set amount of spaces per <Tab>
 nnoremap <Leader>us :UseSpaces 
 
+"TODO: compact mode for all windows (on current tab?)
 nnoremap <Leader>cm :execute ":call ToggleCompactMode()"<CR>
 
 "Font size changing. See ginit.vim

@@ -102,7 +102,9 @@ require('lspconfig').lua_ls.setup {
   capabilities = capabilities,
 }
 
+-- LSP for Python
 require('lspconfig').pyright.setup {
+  single_file_support = true,
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,

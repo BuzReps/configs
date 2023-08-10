@@ -10,8 +10,11 @@ Start with [init.vim](init.vim)
 1. Install lua language server: [lua_ls](https://github.com/LuaLS/lua-language-server)
   * Download [binaries](https://github.com/LuaLS/lua-language-server/releases)
   * Make PATH-visible [script](https://github.com/luals/lua-language-server/wiki/Getting-Started#command-line)
-2. Install C/C++ language server: [clangd](https://clangd.llvm.org/)  
-  `sudo apt install clangd`
+2. Install C/C++ language server: [clangd](https://clangd.llvm.org/)
+  * `sudo apt install clangd`
+3. Install python language server: [pyright](https://github.com/microsoft/pyright)
+  * `sudo snap install pyright`
+  * If `snap` not available, probably installed like other vscode extension: [download](https://github.com/microsoft/pyright/releases), unzip and make some binary PATH-visible
 
 ## Debug Adapter Protocol (DAP)
 1. Install C/C++ debugger adapter: [vscode-cpptools](https://github.com/microsoft/vscode-cpptools)

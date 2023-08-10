@@ -39,8 +39,9 @@ function! GetWinBar1()
     let modification_tag = "[Modified]"
   endif
 
+  let align_middle = "%="
   let align_right = "%="
 
-  return join([win_num_tag, diff_tag, align_right, modification_tag, file_name, buf_num], " ")
+  return join([win_num_tag, diff_tag, modification_tag, align_right, file_name, buf_num], " ")
 endfunction
 

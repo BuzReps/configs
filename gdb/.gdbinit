@@ -21,3 +21,6 @@ set print symbol-filename on
 # do not print addresses
 #set print address off
 
+# Alternative: att
+set disassembly-flavor intel
+
