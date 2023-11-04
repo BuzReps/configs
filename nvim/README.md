@@ -1,4 +1,4 @@
-Start with [init.vim](init.vim)
+* Install xclip `sudo apt install xclip`
 
 ## Telescope
 1. Install [ripgrep](https://github.com/BurntSushi/ripgrep) - grep alternative  

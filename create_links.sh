@@ -2,9 +2,11 @@
 ln -s -r bash/.bashrc ~/.bashrc
 ln -s -r tmux/.tmux.conf ~/.tmux.conf
 mkdir -p ~/.config
-ln -s -r alacritty ~/.config/alacritty
+#ln -s -r alacritty ~/.config/alacritty
 ln -s -r nvim ~/.config/nvim
 ln -s -r gdb/.gdbinit ~/.gdbinit
+ln -s -r Xresources/.Xresources ~/.Xresources
+ln -s -r Xresources/.Xresources.d ~/.Xresources.d
 # TODO git:
 # 1) Create ~/.gitconfig if absent
 # 2) Check in ~/.gitconfig if git/.gitconfig is already included
