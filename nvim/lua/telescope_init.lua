@@ -13,6 +13,8 @@ require("telescope").setup {
       ".ilk$",
       ".obj$",
       ".idb$",
+      ".bin$",
+      ".obj$",
 
       -- Images
       ".png$",

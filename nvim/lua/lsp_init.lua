@@ -110,3 +110,10 @@ require('lspconfig').pyright.setup {
   capabilities = capabilities,
 }
 
+-- LSP for Haskell
+require('lspconfig').hls.setup {
+  filetypes = { 'haskell', 'lhaskell', 'cabal' },
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+}

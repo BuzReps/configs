@@ -5,4 +5,6 @@ XTerm.vt100.scrollBar: false
 XTerm.vt100.faceName: Iosevka Term:size=12:antialias=true
 XTerm.vt100.renderFont: true
 XTerm.vt100.selectToClipboard: true
-
+XTerm*vt100.background: #212121
+XTerm*vt100.foreground: #80FF80
+XTerm*cursorBlink: true
