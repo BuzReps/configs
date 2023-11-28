@@ -13,8 +13,8 @@
 2. Install C/C++ language server: [clangd](https://clangd.llvm.org/)
   * `sudo apt install clangd`
 3. Install python language server: [pyright](https://github.com/microsoft/pyright)
-  * `sudo snap install pyright`
-  * If `snap` not available, probably installed like other vscode extension: [download](https://github.com/microsoft/pyright/releases), unzip and make some binary PATH-visible
+  * Install [nodejs](https://nodejs.org/en/)
+  * Run `npm install --global pyright`
 
 ## Debug Adapter Protocol (DAP)
 1. Install C/C++ debugger adapter: [vscode-cpptools](https://github.com/microsoft/vscode-cpptools)

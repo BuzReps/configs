@@ -56,10 +56,27 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}------------------ Exit status: '\$?' ------------------\n\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\'\n'$ '
+function timer_start {
+  timer=${timer:-$SECONDS}
+}
+
+function timer_stop {
+  timer_show=$(($SECONDS - $timer))
+  unset timer
+}
+
+trap 'timer_start' DEBUG
+
+if [ "$PROMPT_COMMAND" == "" ]; then
+  PROMPT_COMMAND="timer_stop"
 else
-    PS1='${debian_chroot:+($debian_chroot)}------------------ Exit status: '\$?' ------------------\n\n\u@\h:\w\'\n'$ '
+  PROMPT_COMMAND="$PROMPT_COMMAND; timer_stop"
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}------------------ Duration: ${timer_show}s Exit status: '\$?' ------------------\n\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\'\n'$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}------------------ Duration: ${timer_show}s Exit status: '\$?' ------------------\n\n\u@\h:\w\'\n'$ '
 fi
 unset color_prompt force_color_prompt
 

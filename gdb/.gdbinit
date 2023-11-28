@@ -24,3 +24,6 @@ set print symbol-filename on
 # Alternative: att
 set disassembly-flavor intel
 
+set print frame-info short-location
+set print frame-arguments none
+

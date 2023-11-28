@@ -4,6 +4,7 @@
 
 [diff]
 	tool = nvimdiff
+	wsErrorHighlight = all
 
 [difftool]
 	prompt = true
