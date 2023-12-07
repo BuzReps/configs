@@ -150,3 +150,7 @@ if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi
 
+export FZF_DEFAULT_OPTS="
+--inline-info \
+--ansi \
+--color=16"

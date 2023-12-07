@@ -291,8 +291,8 @@ noremap <Leader>p "0p
 noremap <Leader>P "0P
 
 "centering window at search result
-nnoremap n nzz
-nnoremap N Nzz
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 "centering window at undo/redo
 nnoremap u uzz
@@ -431,7 +431,7 @@ command! -nargs=1 SetLayoutTheme call s:SetLayoutTheme(<f-args>)
 "                        OTHER
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"Executing here, because mappings not works after leader change
+"Executing here, because mappings dont work after leader change
 exec 'luafile ' .. g:config_root .. '/lua/init.lua'
 
 "Host-specific configs e.g. cd aliases

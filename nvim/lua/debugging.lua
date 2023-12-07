@@ -2,25 +2,7 @@
 
 -- Instruction: https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(gdb-via--vscode-cpptools)
 
--- TODO: revise debugging in nvim
-do return end
-
 local dap = require('dap')
-
--- #TODO silent?
-vim.keymap.set('n', '<F1>', ":lua require('dap').step_into()<CR>")
-vim.keymap.set('n', '<F2>', ":lua require('dap').step_over()<CR>")
-vim.keymap.set('n', '<F3>', ":lua require('dap').step_out()<CR>")
-vim.keymap.set('n', '<F5>', ":lua require('dap').continue()<CR>")
-vim.keymap.set('n', '<Leader><F5>', SelectDebugTarget)
-vim.keymap.set('n', '<F6>', ":lua require('dap').terminate()<CR>")
-vim.keymap.set('n', '<F7>', ":lua require('dapui').toggle()<CR>")
-vim.keymap.set('n', '<F8>', ":lua require('dap').focus_frame()<CR>")
-vim.keymap.set('n', '<Leader>bt', ":lua require('dap').toggle_breakpoint()<CR>")
-vim.keymap.set('n', '<Leader>bc', ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
-vim.keymap.set('n', '<Leader>lp', ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
-vim.keymap.set('n', '<Leader>dr', ":lua require('dap').repl.open()<CR>")
-vim.keymap.set('n', '<Leader>dr', ":lua require('dap').run_last()<CR>")
 
 vim.api.nvim_create_user_command(
   'DapResetSizes',
@@ -37,7 +19,8 @@ dap_last_debug_target = ""
 -- TODO Add CMake targets selection
 function SelectDebugTarget()
   -- Faster and less user-friendly alternative:
-  -- do return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') end
+  dap_last_debug_target = vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+  do return end
 
   local pickers = require("telescope.pickers")
   local previewers = require("telescope.previewers")
@@ -62,7 +45,7 @@ function SelectDebugTarget()
         dap_last_debug_target = selection.value
       end)
       return true
-    end,
+    end
   })
 end
 
@@ -192,3 +175,18 @@ end
 dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
+
+-- #TODO silent?
+vim.keymap.set('n', '<F1>', ":lua require('dap').step_into()<CR>")
+vim.keymap.set('n', '<F2>', ":lua require('dap').step_over()<CR>")
+vim.keymap.set('n', '<F3>', ":lua require('dap').step_out()<CR>")
+vim.keymap.set('n', '<F5>', ":lua require('dap').continue()<CR>")
+vim.keymap.set('n', '<Leader><F5>', SelectDebugTarget)
+vim.keymap.set('n', '<F6>', ":lua require('dap').terminate()<CR>")
+vim.keymap.set('n', '<F7>', ":lua require('dapui').toggle()<CR>")
+vim.keymap.set('n', '<F8>', ":lua require('dap').focus_frame()<CR>")
+vim.keymap.set('n', '<Leader>bt', ":lua require('dap').toggle_breakpoint()<CR>")
+vim.keymap.set('n', '<Leader>bc', ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+vim.keymap.set('n', '<Leader>lp', ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
+vim.keymap.set('n', '<Leader>dr', ":lua require('dap').repl.open()<CR>")
+vim.keymap.set('n', '<Leader>dr', ":lua require('dap').run_last()<CR>")

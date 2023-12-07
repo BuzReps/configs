@@ -4,6 +4,12 @@ require("telescope").setup {
       ".git$",
       ".vs$",
       "vcpkg/*",
+      "build/*",
+      "doc/*",
+      "tests/*",
+      "dist/*",
+      "mkspecs/*",
+      "examples/*",
 
       -- Binaries
       ".pdb$",

@@ -5,6 +5,7 @@ mkdir -p ~/.config
 #ln -s -r alacritty ~/.config/alacritty
 ln -s -r nvim ~/.config/
 ln -s -r gdb/.gdbinit ~/
+ln -s -r gdb/.gdbearlyinit ~/
 ln -s -r Xresources/.Xresources ~/
 ln -s -r Xresources/.Xresources.d ~/
 # See README in redshift

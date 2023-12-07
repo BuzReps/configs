@@ -11,6 +11,9 @@ require("symbols-outline").setup({
   relative_width = false,
   width = 55,
   show_symbol_details = false,
+  symbol_blacklist = {
+    "Constructor",
+  },
   symbols = {
     File = { icon = "file", hl = "@text.uri" },
     Module = { icon = "module", hl = "@namespace" },
