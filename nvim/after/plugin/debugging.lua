@@ -176,17 +176,17 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 
--- #TODO silent?
-vim.keymap.set('n', '<F1>', ":lua require('dap').step_into()<CR>")
-vim.keymap.set('n', '<F2>', ":lua require('dap').step_over()<CR>")
-vim.keymap.set('n', '<F3>', ":lua require('dap').step_out()<CR>")
-vim.keymap.set('n', '<F5>', ":lua require('dap').continue()<CR>")
-vim.keymap.set('n', '<Leader><F5>', SelectDebugTarget)
-vim.keymap.set('n', '<F6>', ":lua require('dap').terminate()<CR>")
-vim.keymap.set('n', '<F7>', ":lua require('dapui').toggle()<CR>")
-vim.keymap.set('n', '<F8>', ":lua require('dap').focus_frame()<CR>")
-vim.keymap.set('n', '<Leader>bt', ":lua require('dap').toggle_breakpoint()<CR>")
-vim.keymap.set('n', '<Leader>bc', ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
-vim.keymap.set('n', '<Leader>lp', ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>")
-vim.keymap.set('n', '<Leader>dr', ":lua require('dap').repl.open()<CR>")
-vim.keymap.set('n', '<Leader>dr', ":lua require('dap').run_last()<CR>")
+local map = require("buzreps.remap")
+map.normal { '<F1>', ":lua require('dap').step_into()<CR>" }
+map.normal { '<F2>', ":lua require('dap').step_over()<CR>" }
+map.normal { '<F3>', ":lua require('dap').step_out()<CR>" }
+map.normal { '<F5>', ":lua require('dap').continue()<CR>" }
+map.normal { '<Leader><F5>', SelectDebugTarget }
+map.normal { '<F6>', ":lua require('dap').terminate()<CR>" }
+map.normal { '<F7>', ":lua require('dapui').toggle()<CR>" }
+map.normal { '<F8>', ":lua require('dap').focus_frame()<CR>" }
+map.normal { '<Leader>bt', ":lua require('dap').toggle_breakpoint()<CR>" }
+map.normal { '<Leader>bc', ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>" }
+map.normal { '<Leader>lp', ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>" }
+map.normal { '<Leader>dr', ":lua require('dap').repl.open()<CR>" }
+map.normal { '<Leader>dr', ":lua require('dap').run_last()<CR>" }

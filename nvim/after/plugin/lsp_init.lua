@@ -1,12 +1,14 @@
+local map = require("buzreps.remap")
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
 
--- vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '<Leader>e', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<Leader>E', vim.diagnostic.goto_prev, opts)
+-- map.normal { '<Leader>e', vim.diagnostic.open_float, opts)
+map.normal { '<Leader>e', vim.diagnostic.goto_next, opts, descr = "Goto next lsp error" }
+map.normal { '<Leader>E', vim.diagnostic.goto_prev, opts, descr = "Goto prev lsp error" }
 -- TODO read about
--- vim.keymap.set('n', '<Leader>q', vim.diagnostic.setloclist, opts)
+-- map.normal { '<Leader>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -20,23 +22,24 @@ local on_attach = function(client, bufnr)
   -- buffer = 0 (0 means whether the current buffer is)
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
-  vim.keymap.set('n', '<Leader>q', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('i', '<C-q>', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<Leader>gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', '<Leader>f', vim.lsp.buf.format, bufopts)
+  map.normal { '<Leader>q', vim.lsp.buf.hover, bufopts }
+  map.insert { '<C-q>', vim.lsp.buf.hover, bufopts }
+  map.normal { 'gd', vim.lsp.buf.definition, bufopts }
+  map.normal { 'gD', vim.lsp.buf.declaration, bufopts }
+  map.normal { '<Leader>D', vim.lsp.buf.type_definition, bufopts }
+  map.normal { '<Leader>rn', vim.lsp.buf.rename, bufopts }
+  map.normal { '<Leader>gr', vim.lsp.buf.references, bufopts }
+  map.normal { '<Leader>ca', vim.lsp.buf.code_action, bufopts }
+  map.normal { '<Leader>f', vim.lsp.buf.format, bufopts }
 
-  -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  --[[ vim.keymap.set('n', '<space>wl', function()
+  -- map.normal { 'gi', vim.lsp.buf.implementation, bufopts)
+  -- map.normal { '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  -- map.normal { '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  -- map.normal { '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  --[[ map.normal { '<space>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts) ]]--
+  end, bufopts) ]]
+  --
 
   -- Saving active lsp clients (usually single) names to show them in statusline
   vim.b[0]["lsp_clients"] = (function()
@@ -65,11 +68,11 @@ require('lspconfig').clangd.setup {
   -- Uncomment to enable verbose log
   --cmd = { 'clangd', '--log=verbose' },
   on_attach = function(client, bufnr)
-      on_attach(client, bufnr)
-      local bufopts = { noremap = true, silent = true, buffer = bufnr }
-      -- <Leader>h now will switch between header/source
-      vim.keymap.set('n', '<Leader>h', "<cmd>ClangdSwitchSourceHeader<CR>", bufopts)
-    end,
+    on_attach(client, bufnr)
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    -- <Leader>h now will switch between header/source
+    map.normal { '<Leader>h', "<cmd>ClangdSwitchSourceHeader<CR>", bufopts }
+  end,
   flags = lsp_flags,
   capabilities = capabilities,
 }
@@ -119,7 +122,7 @@ require('lspconfig').hls.setup {
 }
 
 -- LSP for QML
-require'lspconfig'.qmlls.setup{
+require 'lspconfig'.qmlls.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,

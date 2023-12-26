@@ -32,10 +32,16 @@ function! s:GetStatusLine1Impl(isFocused)
   let rightPart = ""
 
   if a:isFocused
-    let centerPart = " Current dir:" .. getcwd() .. " "
     if (exists("b:lsp_clients"))
       let leftPart ..= "LSP:" .. b:lsp_clients .. " "
     endif
+
+    let randomMapping = luaeval('require("buzreps.recall").get_current_recall_entry()')
+    let centerPart = " "
+    let centerPart ..= "Current dir:" .. getcwd()
+    let centerPart ..= " ——— Random thing: " .. randomMapping['text']
+    let centerPart ..= " "
+
     let rightPart = '┤ Character:%-3c Line:%l/%L'
   else
     let centerPart = string(winNr) .. " " .. relPath

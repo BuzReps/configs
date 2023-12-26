@@ -1,5 +1,7 @@
 -- Buzun Vladislav's neovim config
 
+vim.cmd('language en_US.UTF-8')
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 

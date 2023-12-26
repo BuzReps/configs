@@ -60,5 +60,6 @@ local GrepWithFileFilter = function()
     disable_coordinates = true
   })
 end
-vim.keymap.set('n', '<Leader>fg', GrepWithFileFilter, { noremap = true, silent = true })
 
+local map = require("buzreps.remap")
+map.normal { '<Leader>fg', GrepWithFileFilter, { noremap = true, silent = true } }
