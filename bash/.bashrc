@@ -30,32 +30,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
 function timer_start {
   timer=${timer:-$SECONDS}
 }
@@ -73,21 +47,7 @@ else
   PROMPT_COMMAND="$PROMPT_COMMAND; timer_stop"
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}------------------ Duration: ${timer_show}s Exit status: '\$?' ------------------\n\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\'\n'$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}------------------ Duration: ${timer_show}s Exit status: '\$?' ------------------\n\n\u@\h:\w\'\n'$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+PS1='------------------ Duration: ${timer_show}s Exit status: '\$?' ------------------\n\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\'\n'$ '
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -106,11 +66,21 @@ LS_COLORS=$LS_COLORS":tw=30;42:ow=30;42:"
 LS_COLORS=$LS_COLORS":di=04;32:*.h=01;36:*.cpp=01;34:*CMakeLists.txt=30;103:"
 LS_COLORS=$LS_COLORS":*.filters=90:*.rc=90:*.user=90:*.vcproj=90:*.vcxproj=90:*.sln=90:*.manifest=90:*.ui=90:"
 
-# some more ls aliases
-alias ls='ls --group-directories-first --color -a'
-alias ll='ls --group-directories-first --color -la'
-alias lsex='ls --group-directories-first --sort=extension --color -a'
-alias llex='ls --group-directories-first --sort=extension --color -la'
+config_ls ()
+{
+  local LS_COMMAND=ls
+  if command -v lsd &> /dev/null
+  then
+    LS_COMMAND=lsd
+  fi
+
+  local COMMON_ARGS="--group-directories-first --color=auto"
+  alias ls="$LS_COMMAND $COMMON_ARGS -ah"
+  alias ll="$LS_COMMAND $COMMON_ARGS -lah"
+  alias lsex="$LS_COMMAND $COMMON_ARGS --sort=extension -ah"
+  alias llex="$LS_COMMAND $COMMON_ARGS --sort=extension -lah"
+}
+config_ls
 
 # Alias definitions.
 
@@ -121,15 +91,12 @@ alias ggui='git gui & disown'
 alias tmuxNewNamedSession="tmux new -s "
 alias clipboard_to_png='xclip -selection clipboard -t image/png -o > '
 alias info='info --vi-keys'
+alias tree='tree -a --dirsfirst'
 
 # Show completion options
 bind 'set show-all-if-ambiguous on'
 # Pressing tab will traverse completion options
 # bind 'TAB:menu-complete'
-
-if [ -f ~/.bash_local ]; then
-    . ~/.bash_local
-fi
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -148,6 +115,10 @@ fi
 
 if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
+fi
+
+if [ -f "$HOME/.local/bin" ]; then
+    PATH="$PATH:$HOME/.local/bin"
 fi
 
 export FZF_DEFAULT_OPTS="
