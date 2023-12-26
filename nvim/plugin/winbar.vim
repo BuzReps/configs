@@ -7,8 +7,6 @@ if exists("g:buz_winbar")
 endif
 let g:buz_winbar = 1
 
-exec "source " .. g:config_root .. "/common.vim"
-
 " @brief Get window bar template
 " @example Inactive window bar: Win:1 [Marked for diff]            [Readonly] init.vim Buf:21
 " @example Active window bar:   Win:2                           [Modified] [other.vim] Buf:23
@@ -45,3 +43,6 @@ function! GetWinBar1()
   return join([win_num_tag, diff_tag, modification_tag, align_right, file_name, buf_num], " ")
 endfunction
 
+hi! link WinBar Normal
+
+set winbar=%!GetWinBar1()

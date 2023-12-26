@@ -7,8 +7,6 @@ if exists("g:buz_tabline")
 endif
 let g:buz_tabline = 1
 
-exec "source " .. g:config_root .. "/common.vim"
-
 let s:TabLineDefaultLabel = "New tab"
 
 "Init labels list
@@ -137,4 +135,10 @@ function! GetTabLine()
   let s..= "%#TabLineFill#%T"
   return s
 endfunction
+
+hi! link TabLine Normal
+hi! link TabLineSel Normal
+hi! link TabLineFill Normal
+
+set tabline=%!GetTabLine()
 

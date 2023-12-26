@@ -117,3 +117,10 @@ require('lspconfig').hls.setup {
   flags = lsp_flags,
   capabilities = capabilities,
 }
+
+-- LSP for QML
+require'lspconfig'.qmlls.setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+}

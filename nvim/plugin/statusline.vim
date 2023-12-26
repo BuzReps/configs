@@ -8,9 +8,6 @@ if exists("g:buz_statusline")
 endif
 let g:buz_statusline = 1
 
-exec "source " .. g:config_root .. "/common.vim"
-
-
 function! s:GetStatusLine1Impl(isFocused)
   let winInfo = getwininfo(g:statusline_winid)[0]
   let bufInfo = getbufinfo(winInfo.bufnr)[0]
@@ -65,20 +62,9 @@ function! GetStatusLine1()
   return statusline
 endfunction
 
-"Intended to be used with `set laststatus=3`
-"├—-— 1:vim/nvim/init.vim ——— 2:vim/nvim/lua/init.lua ——— [3:/tmp/asdfb/script.lua] ———┤ Character:22  Line:13/37
-function! GetStatusLine2()
-  return GetStatusLine1()
-endfunction
+hi! link StatusLine Normal
+hi! link StatusLineNC Normal
 
-"Intended to be used with `set laststatus=3`
-"├————————————————— /home/vladislav/repos/configs/vim/nvim + init.vim —————————————————┤ Character:22  Line:13/37
-function! GetStatusLine3()
-  "TODO IMPLEMENT
-  return GetStatusLine1()
-endfunction
-
-"Comparison:
-"├———————————————— Current dir: /home/vladislav/repos/configs/vim/nvim ————————————————┤ Character:22  Line:13/37
-"├—-— 1:vim/nvim/init.vim ——— 2:vim/nvim/lua/init.lua ——— [3:/tmp/asdfb/script.lua] ———┤ Character:22  Line:13/37
-"├————————————————— /home/vladislav/repos/configs/vim/nvim + init.vim —————————————————┤ Character:22  Line:13/37
+"Show only one statusline of a current buffer at screen bottom
+set laststatus=3
+set statusline=%!GetStatusLine1()
