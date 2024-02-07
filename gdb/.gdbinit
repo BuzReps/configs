@@ -5,7 +5,8 @@
 # See https://sourceware.org/gdb/onlinedocs/gdb/Prompt.html
 # See https://sourceware.org/gdb/onlinedocs/gdb/gdb_002eprompt.html#gdb_002eprompt
 # \033 dont work
-set extended-prompt \[\e[0;91m\]----------------------------------------------\n\[\e[0;32m\]> \[\e[0m\]
+# DDD does not work with escape sequences and its config
+#set extended-prompt \[\e[0;91m\]----------------------------------------------\n\[\e[0;32m\]> \[\e[0m\]
 
 # See print settings: https://ftp.gnu.org/old-gnu/Manuals/gdb/html_node/gdb_57.html
 
@@ -27,5 +28,4 @@ set disassembly-flavor intel
 set print frame-info short-location
 set print frame-arguments none
 
-#layout src
-#focus next
+set debuginfod enabled off

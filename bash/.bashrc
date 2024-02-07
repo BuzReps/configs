@@ -91,7 +91,7 @@ alias ggui='git gui & disown'
 alias tmuxNewNamedSession="tmux new -s "
 alias clipboard_to_png='xclip -selection clipboard -t image/png -o > '
 alias info='info --vi-keys'
-alias tree='tree -a --dirsfirst'
+alias tree='tree -a --dirsfirst -I .git'
 
 # Show completion options
 bind 'set show-all-if-ambiguous on'
