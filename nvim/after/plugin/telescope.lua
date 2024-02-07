@@ -35,6 +35,9 @@ telescope.setup {
       -- Documents
       ".xls$",
       ".xlsx$",
+      ".pdf$",
+      ".doc$",
+      ".docx$",
 
       -- Archives
       ".zip$",

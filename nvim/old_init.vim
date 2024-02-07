@@ -38,11 +38,11 @@ command! Q q
 "Requires compatible terminal
 set termguicolors
 
-command! OpenHighlightGroupsWindow :so $VIMRUNTIME\syntax\hitest.vim
-command! ReloadConfig :source $MYVIMRC
+command! OpenHighlightGroupsWindow :so $VIMRUNTIME/syntax/hitest.vim
 command! PasteUnformatted call PasteUnformatted()
 command! FileInfo call FileInfo()
 command! DeleteHiddenListedBuffers call DeleteHiddenListedBuffers()
+command! ToggleRecaller call ToggleRecaller()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        KEY MAPPING

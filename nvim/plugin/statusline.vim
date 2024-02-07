@@ -7,6 +7,7 @@ if exists("g:buz_statusline")
   finish
 endif
 let g:buz_statusline = 1
+let g:buz_statuslineShowRandomCommand = 0
 
 function! s:GetStatusLine1Impl(isFocused)
   let winInfo = getwininfo(g:statusline_winid)[0]
@@ -36,10 +37,14 @@ function! s:GetStatusLine1Impl(isFocused)
       let leftPart ..= "LSP:" .. b:lsp_clients .. " "
     endif
 
-    let randomMapping = luaeval('require("buzreps.recall").get_current_recall_entry()')
     let centerPart = " "
     let centerPart ..= "Current dir:" .. getcwd()
-    let centerPart ..= " ——— Random thing: " .. randomMapping['text']
+
+    if g:buz_statuslineShowRandomCommand
+      let randomMapping = luaeval('require("buzreps.recall").get_current_recall_entry()')
+      let centerPart ..= " ——— Random " .. randomMapping['category'] .. ": " .. randomMapping['text']
+    endif
+
     let centerPart ..= " "
 
     let rightPart = '┤ Character:%-3c Line:%l/%L'
@@ -66,6 +71,14 @@ function! GetStatusLine1()
     let statusline = "%#StatusLineNC#" .. statusline
   endif
   return statusline
+endfunction
+
+function! ToggleRecaller()
+  if g:buz_statuslineShowRandomCommand
+    let g:buz_statuslineShowRandomCommand = 0
+  else
+    let g:buz_statuslineShowRandomCommand = 1
+  endif
 endfunction
 
 hi! link StatusLine Normal

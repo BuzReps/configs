@@ -1,3 +1,5 @@
+# Vim window commands
+
 CTRL-W CTRL-B	same as "CTRL-W b"
 CTRL-W CTRL-C	same as "CTRL-W c"
 CTRL-W CTRL-D	same as "CTRL-W d"

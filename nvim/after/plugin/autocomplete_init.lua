@@ -10,6 +10,8 @@ cmp.setup({
       require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
+  formatting = {
+  },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -59,6 +61,7 @@ cmp.setup.filetype(
 ]]
 --
 
+--[[
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(
   { '/', '?' },
@@ -83,3 +86,4 @@ cmp.setup.cmdline(
     )
   }
 )
+]]--

@@ -48,3 +48,5 @@ vim.opt.fillchars:append('eob: ')
 vim.opt.fillchars:append('fold: ')
 vim.opt.fillchars:append('stl:—')
 
+vim.o.pumheight = 20
+

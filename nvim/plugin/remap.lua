@@ -38,6 +38,8 @@ map.normal { "<Leader>8", "8<C-w>w" }
 map.normal { "<Leader>9", "9<C-w>w" }
 
 map.insert { "jk", "<Esc>" }
+map.terminal { "<Esc>", [[<C-\><C-n>]] }
+map.terminal { "jk", [[<C-\><C-n>]] }
 
 -- Toggle word [w]rap
 map.normal { "<Leader>w", "<cmd>set wrap!<CR>", descr = "Toggle wrap mode" }
