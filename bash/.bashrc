@@ -49,79 +49,169 @@ fi
 
 PS1='------------------ Duration: ${timer_show}s Exit status: '\$?' ------------------\n\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\'\n'$ '
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+# Append patterns to LS_COLORS
+# Warning: asterisk is prepended to all patterns, 
+#   therefore default keywords e.g. "di" will lead to error
+# 1st argument: patterns. E.g. ".h .cpp"
+# 2nd argument: color value. E.g. "01;34"
+function append_to_LS_COLORS () {
+  local patterns=$1
+  local color=$2
 
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-LS_COLORS=$LS_COLORS":tw=30;42:ow=30;42:"
-LS_COLORS=$LS_COLORS":di=04;32:*.h=01;36:*.cpp=01;34:*CMakeLists.txt=30;103:"
-LS_COLORS=$LS_COLORS":*.filters=90:*.rc=90:*.user=90:*.vcproj=90:*.vcxproj=90:*.sln=90:*.manifest=90:*.ui=90:"
-
-config_ls ()
-{
-  local LS_COMMAND=ls
-  if command -v lsd &> /dev/null
+  local prepend_asterisk=1
+  if [[ $# -eq 3 ]] && [[ $3 == "no_asterisk" ]]
   then
-    LS_COMMAND=lsd
+    prepend_asterisk=0
   fi
 
-  local COMMON_ARGS="--group-directories-first --color=auto"
-  alias ls="$LS_COMMAND $COMMON_ARGS -ah"
-  alias ll="$LS_COMMAND $COMMON_ARGS -lah"
-  alias lsex="$LS_COMMAND $COMMON_ARGS --sort=extension -ah"
-  alias llex="$LS_COMMAND $COMMON_ARGS --sort=extension -lah"
+  for pattern in $patterns
+  do
+    if [[ $prepend_asterisk -eq 1 ]]
+    then
+      pattern="*$pattern"
+    fi
+    LS_COLORS="$LS_COLORS:$pattern=$color"
+  done
+}
+
+function config_colors {
+  # Effects
+  local DEFAULT="00"
+  local BOLD="01"
+  local UNDERLINED="04"
+  local FLASHING="05"
+  local REVERTED="07"
+  local CONCEALED="08"
+
+  # Colors
+  local BLACK="30"
+  local RED="31"
+  local GREEN="32"
+  local ORANGE="33"
+  local BLUE="34"
+  local PURPLE="35"
+  local CYAN="36"
+  local GREY="37"
+
+  # Backgrounds
+  local BLACK_BG="40"
+  local RED_BG="41"
+  local GREEN_BG="42"
+  local ORANGE_BG="43"
+  local BLUE_BG="44"
+  local PURPLE_BG="45"
+  local CYAN_BG="46"
+  local GREY_BG="47"
+
+  # Extra colors
+  local DARK_GREY="90"
+  local LIGHT_RED="91"
+  local LIGHT_GREEN="92"
+  local YELLOW="93"
+  local LIGHT_BLUE="94"
+  local LIGHT_PURPLE="95"
+  local TURQUOISE="96"
+  local WHITE="97"
+
+  local DARK_GREY_BG="100"
+  local LIGHT_RED_BG="101"
+  local LIGHT_GREEN_BG="102"
+  local YELLOW_BG="103"
+  local LIGHT_BLUE_BG="104"
+  local LIGHT_PURPLE_BG="105"
+  local TURQUOISE_BG="106"
+  local WHITE_BG="107"
+
+
+  # TODO Refactor? Delete?
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
+  local NOT_INTERESTING_COLOR=$DARK_GREY
+
+  export GCC_COLORS=":error=01;31:warning=01;35:note=01;36:range1=32:range2=34:locus=01:
+    quote=01:path=01;36:fixit-insert=32:fixit-delete=31:
+    diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:
+    type-diff=01;32:fnname=01;32:targs=35:"
+
+  export LS_COLORS=""
+  append_to_LS_COLORS "di" "$GREEN" "no_asterisk"             # directories
+  append_to_LS_COLORS "ex" "$RED" "no_asterisk"               # executables
+  append_to_LS_COLORS "ln" "target" "no_asterisk"             # symbolic link
+  append_to_LS_COLORS "or" "$WHITE;$RED_BG" "no_asterisk"     # broken symlink
+
+  local C_HEADERS=".h .hpp .hxx"
+  local C_SOURCES=".c .cpp .cxx"
+  local C_SOURCES_COLOR="$BLUE"
+  append_to_LS_COLORS "$C_HEADERS" "$C_HEADERS_COLOR"
+  append_to_LS_COLORS "$C_SOURCES" "$C_SOURCES_COLOR"
+
+  local BUILD_FILES="Makefile CMakeLists.txt"
+  local BUILD_FILES_COLOR="$BLACK;$YELLOW_BG"
+  append_to_LS_COLORS "$BUILD_FILES" "$BUILD_FILES_COLOR"
+
+  local VISUAL_STUDIO_FILES=".filters .rc .user .vcproj .vcxproj .sln .manifest .ui"
+  local SOURCE_CONTROL_FILES=".git .github .gitignore .gitmodules .gitattributes"
+  local VISUAL_STUDIO_FILES_COLOR="$NOT_INTERESTING_COLOR"
+  local SOURCE_CONTROL_FILES_COLOR="$NOT_INTERESTING_COLOR"
+  append_to_LS_COLORS "$VISUAL_STUDIO_FILES" "$VISUAL_STUDIO_FILES_COLOR"
+  append_to_LS_COLORS "$SOURCE_CONTROL_FILES" "$SOURCE_CONTROL_FILES_COLOR"
+}
+config_colors
+
+# Define LS_COMMAND variable containing command for printing directory contents
+# Defaults to "ls"
+function config_ls
+{
+  LS_COMMAND="ls"
+  if command -v lsd &> /dev/null
+  then
+    LS_COMMAND="lsd"
+  fi
 }
 config_ls
 
-# Alias definitions.
+function config_completions {
+  # Show completion options
+  bind 'set show-all-if-ambiguous on'
 
-alias st='git status'
-alias logfiles='git log --oneline --name-only'
-alias blame='git blame --date="format:%d %b %y"'
-alias ggui='git gui & disown'
-alias tmuxNewNamedSession="tmux new -s "
-alias clipboard_to_png='xclip -selection clipboard -t image/png -o > '
-alias info='info --vi-keys'
-alias tree='tree -a --dirsfirst -I .git'
+  # Pressing tab will traverse completion options
+  # bind 'TAB:menu-complete'
 
-# Show completion options
-bind 'set show-all-if-ambiguous on'
-# Pressing tab will traverse completion options
-# bind 'TAB:menu-complete'
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+  # enable programmable completion features (you don't need to enable
+  # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+  # sources /etc/bash.bashrc).
+  if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+      . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+    fi
   fi
-fi
+}
+config_completions
 
-if [ -f "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env"
-fi
+function config_path {
+  # Rust build system thing(?)
+  if [ -f "$HOME/.cargo/env" ]; then
+      . "$HOME/.cargo/env"
+  fi
 
-if [ -f "$HOME/.local/bin" ]; then
-    PATH="$PATH:$HOME/.local/bin"
-fi
+  # Directory for locally installed third-party tools for neovim
+  # Like LuaLS/lua-language-server or OpenDebugAD7 server
+  PATH="$PATH:$HOME/.config/nvim/bin"
+
+  if [ -f "$HOME/.local/bin" ]; then
+      PATH="$PATH:$HOME/.local/bin"
+  fi
+}
+config_path
 
 export FZF_DEFAULT_OPTS="
 --inline-info \
 --ansi \
 --color=16"
+
+if [ -e ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+

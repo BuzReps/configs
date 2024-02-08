@@ -1,5 +1,6 @@
 # TODO: check if files exists: if yes: dont link and print info message?
 ln -s -r bash/.bashrc ~/
+ln -s -r bash/.bash_aliases ~/
 ln -s -r tmux/.tmux.conf ~/
 mkdir -p ~/.config
 #ln -s -r alacritty ~/.config/alacritty
