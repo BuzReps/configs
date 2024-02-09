@@ -30,24 +30,44 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-function timer_start {
-  timer=${timer:-$SECONDS}
+function duration_timer_start {
+  start_timestamp=${start_timestamp:-$SECONDS}
 }
 
-function timer_stop {
-  timer_show=$(($SECONDS - $timer))
-  unset timer
+function duration_timer_stop {
+  total_duration_seconds=$(($SECONDS - $start_timestamp))
+  duration_seconds=$(( total_duration_seconds % 60 ))
+  duration_minutes=$(( (total_duration_seconds / 60) % 60 ))
+  duration_hours=$(( total_duration_seconds / 3600 ))
+
+  if [[ $total_duration_seconds -ge 60 ]]
+  then
+    total_duration_string="${total_duration_seconds}s (${duration_hours}h ${duration_minutes}m ${duration_seconds}s)"
+  else
+    total_duration_string="${total_duration_seconds}s"
+  fi
+
+  total_duration_string="${total_duration_string}"
+
+  unset start_timestamp
 }
 
-trap 'timer_start' DEBUG
+trap 'duration_timer_start' DEBUG
 
 if [ "$PROMPT_COMMAND" == "" ]; then
-  PROMPT_COMMAND="timer_stop"
+  PROMPT_COMMAND="duration_timer_stop"
 else
-  PROMPT_COMMAND="$PROMPT_COMMAND; timer_stop"
+  PROMPT_COMMAND="$PROMPT_COMMAND; duration_timer_stop"
 fi
 
-PS1='------------------ Duration: ${timer_show}s Exit status: '\$?' ------------------\n\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\'\n'$ '
+#PS1='────────────────── Duration: ${total_duration_string} ─── Exit status: '\$?' ──────────────────\n\n\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\'\n'$ '
+#PS1='────────────────── Duration: ${total_duration_string} Exit status: '\$?' ──────────────────\n\n\[\033[01;34m\]\w\[\033[00m\]\n$ '
+
+BORDER_COLOR='\[\033[00;90m\]'
+CLEAR_COLOR='\[\033[00m\]'
+CWD_COLOR='\[\033[01;34m\]'
+USERNAME_COLOR='\[\033[01;32m\]'
+PS1=$BORDER_COLOR'────────────────── Duration: ${total_duration_string} ─── Exit status: '\$?' ──────────────────\n\n⌠'$USERNAME_COLOR'\u@\h'$CLEAR_COLOR':'$CWD_COLOR'\w'$CLEAR_COLOR'\n'$BORDER_COLOR'⌡$'$CLEAR_COLOR' '
 
 # Append patterns to LS_COLORS
 # Warning: asterisk is prepended to all patterns, 
