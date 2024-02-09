@@ -42,7 +42,7 @@ function! s:GetStatusLine1Impl(isFocused)
 
     if g:buz_statuslineShowRandomCommand
       let randomMapping = luaeval('require("buzreps.recall").get_current_recall_entry()')
-      let centerPart ..= " ——— Random " .. randomMapping['category'] .. ": " .. randomMapping['text']
+      let centerPart ..= " ─── Random " .. randomMapping['category'] .. ": " .. randomMapping['text']
     endif
 
     let centerPart ..= " "
@@ -56,7 +56,7 @@ function! s:GetStatusLine1Impl(isFocused)
 
   let centerPartPos = (totalWidth - strlen(centerPart)) / 2
   let leftFillLength = centerPartPos - strlen(leftPart)
-  let leftPart .= FillString('—', leftFillLength)
+  let leftPart .= FillString('─', leftFillLength)
   return leftPart . centerPart . '%=' . rightPart
 endfunction
 

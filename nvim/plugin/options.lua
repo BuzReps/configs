@@ -31,7 +31,7 @@ vim.opt.shiftwidth = 2
 
 -- Show invisible characters
 -- Useful characters: '»', '·', ඞ
-vim.opt.listchars = 'lead:·,trail:·,tab:| '
+vim.opt.listchars = 'lead: ,trail:·,tab:» '
 vim.opt.list = true
 
 -- Enable syntax highlighting
@@ -43,10 +43,10 @@ vim.opt.title = true
 -- Colors specified columns
 vim.opt.colorcolumn = "80,120"
 
-vim.opt.fillchars = 'horiz:—,horizup:┴,horizdown:┬,vert:│,vertleft:┤,vertright:├,verthoriz:┼'
+vim.opt.fillchars = 'horiz:─,horizup:┴,horizdown:┬,vert:│,vertleft:┤,vertright:├,verthoriz:┼'
 vim.opt.fillchars:append('eob: ')
 vim.opt.fillchars:append('fold: ')
-vim.opt.fillchars:append('stl:—')
+vim.opt.fillchars:append('stl:─')
 
 vim.o.pumheight = 20
 
