@@ -3,7 +3,7 @@ ln -s -r bash/.bashrc ~/
 ln -s -r bash/.bash_aliases ~/
 ln -s -r tmux/.tmux.conf ~/
 mkdir -p ~/.config
-#ln -s -r alacritty ~/.config/alacritty
+ln -s -r alacritty ~/.config/alacritty
 ln -s -r nvim ~/.config/
 ln -s -r gdb/.gdbinit ~/
 ln -s -r gdb/.gdbearlyinit ~/
