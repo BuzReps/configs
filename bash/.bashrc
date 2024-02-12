@@ -142,16 +142,15 @@ function config_colors {
   local TURQUOISE_BG="106"
   local WHITE_BG="107"
 
-
   # TODO Refactor? Delete?
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 
   local NOT_INTERESTING_COLOR=$DARK_GREY
 
-  export GCC_COLORS=":error=01;31:warning=01;35:note=01;36:range1=32:range2=34:locus=01:
-    quote=01:path=01;36:fixit-insert=32:fixit-delete=31:
-    diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:
-    type-diff=01;32:fnname=01;32:targs=35:"
+  export GCC_COLORS=":error=$BOLD;$RED:warning=$BOLD;$PURPLE:note=$BOLD;$CYAN:path=$BOLD;$CYAN"
+  GCC_COLORS="$GCC_COLORS:range1=$GREEN:range2=$BLUE:locus=$DARK_GREY:quote=$BOLD;$LIGHT_BLUE"
+  GCC_COLORS="$GCC_COLORS:fnname=$BOLD;$GREEN:targs=$PURPLE:fixit-insert=$GREEN:fixit-delete=$RED"
+  GCC_COLORS="$GCC_COLORS:diff-filename=$BOLD:diff-hunk=$GREEN:diff-delete=$RED:diff-insert=$GREEN:type-diff=$BOLD;$GREEN"
 
   export LS_COLORS=""
   append_to_LS_COLORS "di" "$GREEN" "no_asterisk"             # directories
