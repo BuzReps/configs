@@ -47,7 +47,9 @@ function! s:GetStatusLine1Impl(isFocused)
 
     let centerPart ..= " "
 
-    let rightPart = '┤ Character:%-3c Line:%l/%L'
+    let rightPart = '┤ '
+    let rightPart ..= (&expandtab ? "Spaces" : "Tabs") .. "(" .. &shiftwidth .. ")"
+    let rightPart ..= ' Character:%-3c Line:%l/%L'
   else
     let centerPart = string(winNr) .. " " .. relPath
   endif
