@@ -1,8 +1,5 @@
 -- netrw - default filesystem browser
 
--- Set tree view type as default
-vim.g.netrw_liststyle = 3
-
 -- Disable banner
 vim.g.netrw_banner = 0
 

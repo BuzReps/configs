@@ -3,47 +3,51 @@ local builtin = require("telescope.builtin")
 
 telescope.setup {
   defaults = {
+    layout_strategy = "vertical",
     file_ignore_patterns = {
+      -- Dev directories
       ".git$",
       ".vs$",
-      "^vcpkg/*",
-      "^build/*",
-      "^doc/*",
-      "^tests/*",
-      "^dist/*",
-      "^mkspecs/*",
-      "^examples/*",
+      ".cache$",
+      "^vcpkg/",
+      "^build/",
+      "^bin/",
+      "^doc/",
+      "^tests/",
+      "^dist/",
+      "^mkspecs/",
+      "^examples/",
 
       -- Binaries
-      ".pdb$",
-      ".tlog$",
-      ".exe$",
-      ".dll$",
-      ".ilk$",
-      ".obj$",
-      ".idb$",
-      ".bin$",
-      ".obj$",
+      "%.pdb",
+      "%.tlog",
+      "%.exe",
+      "%.dll",
+      "%.ilk",
+      "%.obj",
+      "%.idb",
+      "%.bin",
+      "%.obj",
 
       -- Images
-      ".png$",
-      ".jpg$",
-      ".jpeg$",
-      ".bmp$",
-      ".ico$",
+      "%.png",
+      "%.jpg",
+      "%.jpeg",
+      "%.bmp",
+      "%.ico",
 
       -- Documents
-      ".xls$",
-      ".xlsx$",
-      ".pdf$",
-      ".doc$",
-      ".docx$",
+      "%.xls",
+      "%.xlsx",
+      "%.pdf",
+      "%.doc",
+      "%.docx",
 
       -- Archives
-      ".zip$",
-      ".rar$",
-      ".tar$",
-      ".gz$",
+      "%.zip",
+      "%.rar",
+      "%.tar",
+      "%.gz",
     },
   }
 }

@@ -63,3 +63,6 @@ vim.api.nvim_create_user_command(
   {
     desc = "Toggle diff mode for window. If two or more windows marked for diff, diff mode is shown"
   })
+
+local my_colorscheme = require("buzreps.my_colorscheme")
+my_colorscheme.enable()

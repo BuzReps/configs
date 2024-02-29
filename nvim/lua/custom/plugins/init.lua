@@ -71,5 +71,7 @@ return {
   'preservim/vim-markdown',
 
   -- Rose-pine colorscheme
-  { 'rose-pine/neovim', name = 'rose-pine' }
+  -- { 'rose-pine/neovim', name = 'rose-pine' }
+
+  'NvChad/nvim-colorizer.lua',
 }

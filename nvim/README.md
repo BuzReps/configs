@@ -2,14 +2,14 @@
 
 * Plugins are managed by [lazy.nvim](https://github.com/folke/lazy.nvim) plugin manager
     that is automatically downloaded at first launch typically in `~/.local/share/nvim/lazy/lazy.nvim`.
-    Plugins are typically installed in `~/.local/share/nvim/lazy`
+    Plugins are automatically downloaded in `~/.local/share/nvim/lazy`
 
 Brief description:
-* `lua.init` executed first. Initializes plugin manager, global variables and functions
-* `colors/` contains colorschemes available for `:colorcheme <scheme>`, where file name defines colorscheme name
+* `~/.config/nvim/init.lua` executed first. Initializes plugin manager, global variables and functions
 * `plugin/` contains automatically sourced scripts with no dependencies
 * `after/plugin/` contains scripts that are automatically sourced in the last order. Typically they configure plugins and setup stuff that depends on them
-* `lua/` contains set of lua scripts and modules that are not sourced automatically. Typically 
+* `colors/` contains colorschemes available for `:colorcheme <scheme>`, where file name defines colorscheme name
+* `lua/` contains custom scripts that are loaded using `require(...)`
 * `lua/custom/plugins/` contains a set of lua tables that lists plugins to (lazy) load
 
 ## Telescope

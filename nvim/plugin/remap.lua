@@ -97,10 +97,10 @@ map.normal { "<leader>frp", "<cmd>Telescope resume<cr>" }
 -- normal{"<leader>ftd", "<cmd>Telescope builtin<cr>"}
 -- normal{"<leader>freg", "<cmd>Telescope registers<cr>"}
 
-map.normal { '<leader>n', ' <cmd>Lex<cr>' }
+map.normal { '<leader>n', '<cmd>Lex<cr>' }
 
 -- [s]ymbols [o]utline
-map.normal { '<Leader>so', ' <cmd>SymbolsOutline<cr>' }
+map.normal { '<Leader>so', '<cmd>SymbolsOutline<cr>' }
 
 -- Window resizing
 map.normal { '<F9>', ':resize -2<CR>' }
