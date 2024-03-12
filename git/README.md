@@ -1,7 +1,7 @@
 # .gitconfig
 
 [Git (1.7.10+)](https://git-scm.com/docs/git-config#_includes) supports including files.  
-Local ```.gitconfig``` example:
+Host-specific ```.gitconfig``` example:
 ```
 [user]
 	name = <Your name>
