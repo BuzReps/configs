@@ -9,7 +9,7 @@ xrandr --output VGA-1 --off \
 	--output HDMI-A-1-0      --mode 1920x1080 --rate 75 --pos 1920x420 --rotate normal \
 	--output DisplayPort-1-0 --mode 1920x1080 --rate 75 --pos 3840x0   --rotate right
 
-# Disable screensaver
+ # Disable screensaver
 xset -dpms
 xset s off
 

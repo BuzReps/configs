@@ -1,14 +1,14 @@
 #!/bin/bash
 
+COLOR_END=$'\033[0m'
+COLOR_ERROR=$'\033[31m'
+COLOR_WARNING=$'\033[30;43m'
+COLOR_SUCCESS=$'\033[32m'
+
 # Create symbolic link to given target in given directory
 # @param[in] $1 Target file or directory
 # @param[in] $2 Directory to store link into
 function create_link() {
-	local COLOR_END=$'\033[0m'
-	local COLOR_ERROR=$'\033[31m'
-	local COLOR_WARNING=$'\033[30;43m'
-	local COLOR_SUCCESS=$'\033[32m'
-
 	local target=$1
 	local directory=$2
 	if [[ "$directory" != */ ]]; then
@@ -35,15 +35,22 @@ function create_link() {
 create_link alacritty ~/.config/
 create_link bash/.bashrc ~/
 create_link bash/.bash_aliases ~/
+# TODO FEATURE: Interactive .bash_local creation?
+if [ ! -e ~/.bash_local ]; then
+	cp bash/.bash_local ~/
+	echo ${COLOR_WARNING}"[+] Created default ~/.bash_local. Adjust defaults if needed"${COLOR_END}
+else
+	echo ${COLOR_WARNING}"[ ] Found existing ~/.bash_local. Check default bash/.bash_local for missing variables!"${COLOR_END}
+fi
 create_link gdb/.gdbinit ~/
 create_link gdb/.gdbearlyinit ~/
 create_link git/.gitconfig ~/
 create_link i3 ~/.config/
 create_link nvim ~/.config/
-# See README in redshift
+# Why hardlink? See redshift/README.md
 ln redshift/redshift.conf ~/.config/
 create_link tmux/.tmux.conf ~/
-create_link Xresources/.Xresources ~/
-create_link Xresources/.xsession ~/
-create_link Xresources/.Xresources.d ~/
+create_link X11/.Xresources ~/
+create_link X11/.xsession ~/
+create_link X11/.Xresources.d ~/
 

@@ -234,3 +234,7 @@ if [ -e ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+if [ -e ~/.bash_local ]; then
+    . ~/.bash_local
+fi
+
