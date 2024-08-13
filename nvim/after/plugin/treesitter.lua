@@ -1,5 +1,5 @@
 require 'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "cpp", "cmake", "lua", "haskell", "vim", "markdown", "query", "bash", "glsl" },
+  ensure_installed = { "c", "cpp", "cmake", "lua", "haskell", "vim", "vimdoc", "markdown", "query", "bash", "glsl" },
   sync_install = false,
   auto_install = false,
 
