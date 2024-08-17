@@ -4,6 +4,7 @@ COLOR_END=$'\033[0m'
 COLOR_ERROR=$'\033[31m'
 COLOR_WARNING=$'\033[30;43m'
 COLOR_SUCCESS=$'\033[32m'
+COLOR_DIM=$'\033[90m'
 
 # Create link to given target in given directory
 # @param[in] $1 Target file or directory
@@ -25,7 +26,7 @@ function create_link() {
 	local link_name="${directory}$(basename ${target})"
 	if [ -e "${link_name}" ]; then
 		if [ "${link_name}" -ef "${target}" ]; then
-			echo ${COLOR_SUCCESS}"[x] Already exists: ${target} -> ${link_name}"${COLOR_END}
+			echo ${COLOR_DIM}"[x] Already exists: ${target} -> ${link_name}"${COLOR_END}
 		else
 			echo ${COLOR_WARNING}"[ ] File ${link_name} exists. Cannot link ${target}"${COLOR_END}
 		fi
@@ -50,19 +51,23 @@ if [ ! -e ~/.bash_local ]; then
 else
 	echo ${COLOR_WARNING}"[ ] Found existing ~/.bash_local. Check default bash/.bash_local for missing variables!"${COLOR_END}
 fi
-# create_link gdb/.gdbinit ~/
-# create_link gdb/.gdbearlyinit ~/
+create_link terminal-colors.d ~/.config/
+create_link tmux/.tmux.conf ~/
+
 create_link git/.gitconfig ~/
-# create_link i3 ~/.config/
-# create_link sway ~/.config/
 create_link nvim ~/.config/
 # Why hardlink? See redshift/README.md
 create_link redshift/redshift.conf ~/.config/ hard
-# create_link gammastep ~/.config/
-create_link terminal-colors.d ~/.config/
-create_link tmux/.tmux.conf ~/
+
+create_link X11/.Xmodmap ~/
 # create_link X11/.Xresources ~/
 # create_link X11/.xsession ~/
-create_link X11/.xprofile ~/
+# create_link X11/.xprofile ~/
 # create_link X11/.Xresources.d ~/
 
+# create_link gdb/.gdbinit ~/
+# create_link gdb/.gdbearlyinit ~/
+
+# create_link i3 ~/.config/
+# create_link sway ~/.config/
+# create_link gammastep ~/.config/
